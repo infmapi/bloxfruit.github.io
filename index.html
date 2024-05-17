@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control UI</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .glass-bar {
+            background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+            border-radius: 20px; /* Rounded corners */
+            padding: 20px;
+            backdrop-filter: blur(10px); /* Glass morph effect */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow */
+            margin-top: 5vh; /* Adjust to position vertically */
+            width: 60%; /* Take up 60% of the screen width */
+            color: #fff; /* Text color */
+        }
+
+        .glass-circle {
+            width: 45px; /* Adjust the width of the circle */
+            height: 45px; /* Adjust the height of the circle */
+            background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+            border-radius: 50%; /* Circle shape */
+            backdrop-filter: blur(10px); /* Glass morph effect */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow */
+            margin-top: 5vh; /* Adjust to position vertically */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            transition: background-color 1s ease; /* Smooth transition for background color */
+        }
+
+        .glass-circle img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 50%; /* Make the image circular */
+        }
+
+        .message {
+            background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Shadow */
+            font-weight: bold;
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+            transition: opacity 0.5s ease; /* Smooth transition for opacity */
+        }
+
+        .big-box {
+            background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+            border-radius: 20px; /* Rounded corners */
+            margin-top: 5vh; /* Adjust to position vertically */
+            width: 80%; /* Take up 80% of the screen width */
+            height: 80vh; /* Take up 80% of the screen height */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow */
+            padding: 20px; /* Add padding */
+            display: flex; /* Flex container */
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center children horizontally */
+        }
+
+        .glass-dropdown {
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+            border-radius: 20px; /* Rounded corners */
+            padding: 10px 20px; /* Add padding */
+            margin-top: 20px; /* Adjust spacing */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow */
+            color: #fff; /* Text color */
+        }
+
+        .confirmation-popup {
+            background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+            color: #fff;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Shadow */
+            margin-top: 20px; /* Adjust spacing */
+            display: none; /* Initially hidden */
+        }
+
+        .confirmation-popup button {
+            background-color: transparent;
+            border: 1px solid #fff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .confirmation-popup button:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .toggle-switch input[type="checkbox"] {
+            appearance: none;
+            width: 40px;
+            height: 20px;
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            outline: none;
+            cursor: pointer;
+            position: relative;
+            transition: background-color 0.3s ease;
+        }
+
+        .toggle-switch input[type="checkbox"]:checked {
+            background-color: #4CAF50;
+        }
+
+        .toggle-switch input[type="checkbox"]::before {
+            content: '';
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: #fff;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 4px;
+            transition: transform 0.3s ease;
+        }
+
+        .toggle-switch input[type="checkbox"]:checked::before {
+            transform: translateX(20px) translateY(-50%);
+        }
+
+        .toggle-switch label {
+            color: #fff;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        .aim-assist-section {
+            margin-top: 20px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .slider-container {
+            width: 80%;
+            margin-top: 20px;
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+
+        .slider:hover {
+            opacity: 1;
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+
+        .slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #4CAF50;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-bar">
+        <!-- Content of the glass bar -->
+    </div>
+    <div class="glass-circle" onclick="toggleActivation()" id="glassCircle">
+        <img src="logo.png" alt="Logo">
+    </div>
+    <div class="message" id="message">Activated</div>
+
+    <div class="big-box">
+        <p style="color: #fff; font-weight: bold;">Add fruit</p>
+        <select class="glass-dropdown" id="fruitDropdown" onchange="showFruitConfirmation()">
+            <option value="">Select a fruit</option>
+            <option value="Rocket">Rocket</option>
+            <option value="Spin">Spin</option>
+            <option value="Chop">Chop</option>
+            <option value="Spring">Spring</option>
+            <option value="Bomb">Bomb</option>
+            <option value="Smoke">Smoke</option>
+            <option value="Spike">Spike</option>
+            <option value="Flame">Flame</option>
+            <option value="Falcon">Falcon</option>
+            <option value="Ice">Ice</option>
+            <option value="Sand">Sand</option>
+            <option value="Dark">Dark</option>
+            <option value="Diamond">Diamond</option>
+            <option value="Light">Light</option>
+            <option value="Rubber">Rubber</option>
+            <option value="Barrier">Barrier</option>
+            <option value="Ghost">Ghost</option>
+            <option value="Magma">Magma</option>
+            <option value="Quake">Quake</option>
+            <option value="Buddha">Buddha</option>
+            <option value="Love">Love</option>
+            <option value="Spider">Spider</option>
+            <option value="Sound">Sound</option>
+            <option value="Phoenix">Phoenix</option>
+            <option value="Portal">Portal</option>
+            <option value="Rumble">Rumble</option>
+            <option value="Pain">Pain</option>
+            <option value="Blizzard">Blizzard</option>
+            <option value="Gravity">Gravity</option>
+            <option value="Mammoth">Mammoth</option>
+            <option value="T-Rex">T-Rex</option>
+            <option value="Dough">Dough</option>
+            <option value="Shadow">Shadow</option>
+            <option value="Venom">Venom</option>
+            <option value="Control">Control</option>
+            <option value="Spirit">Spirit</option>
+            <option value="Dragon">Dragon</option>
+            <option value="Leopard">Leopard</option>
+            <option value="Kitsune">Kitsune</option>
+        </select>
+        <div class="confirmation-popup" id="fruitConfirmationPopup">
+            <p>Add <span id="selectedFruit"></span>?</p>
+            <button onclick="confirmFruit()">Yes</button>
+            <button onclick="cancelFruit()">No</button>
+        </div>
+
+        <p style="color: #fff; font-weight: bold; margin-top: 20px;">AI system</p>
+        <div class="toggle-switch">
+            <input type="checkbox" id="toggleSwitch" onchange="toggleAI()">
+            <label for="toggleSwitch">On/Off</label>
+        </div>
+
+        <div class="aim-assist-section">
+            <p style="color: #fff; font-weight: bold; margin-top: 20px;">Aim Assist</p>
+            <div class="slider-container">
+                <input type="range" min="0" max="60" value="0" class="slider" id="aimSlider" onchange="showAimAssistConfirmation()">
+            </div>
+        </div>
+    </div>
+
+    <div class="confirmation-popup" id="aimAssistConfirmationPopup">
+        <p>Set Aim Assist to <span id="aimValue"></span>?</p>
+        <button onclick="confirmAimAssist()">Yes</button>
+        <button onclick="cancelAimAssist()">No</button>
+    </div>
+
+    <script>
+        function toggleActivation() {
+            var circle = document.getElementById('glassCircle');
+            var message = document.getElementById('message');
+            if (circle.classList.contains('activated')) {
+                circle.classList.remove('activated');
+                message.textContent = 'Deactivated';
+            } else {
+                circle.classList.add('activated');
+                message.textContent = 'Activated';
+            }
+            message.style.display = 'block';
+            setTimeout(function () {
+                message.style.display = 'none';
+            }, 2000);
+        }
+
+        function showFruitConfirmation() {
+            var dropdown = document.getElementById('fruitDropdown');
+            var selectedFruit = dropdown.options[dropdown.selectedIndex].value;
+            if (selectedFruit !== "") {
+                document.getElementById('selectedFruit').textContent = selectedFruit;
+                document.getElementById('fruitConfirmationPopup').style.display = 'block';
+            }
+        }
+
+        function confirmFruit() {
+            var selectedFruit = document.getElementById('selectedFruit').textContent;
+            var message = document.getElementById('message');
+            message.textContent = 'You will shortly get ' + selectedFruit;
+            message.style.display = 'block';
+            setTimeout(function () {
+                message.style.display = 'none';
+            }, 2000);
+            document.getElementById('fruitConfirmationPopup').style.display = 'none';
+        }
+
+        function cancelFruit() {
+            document.getElementById('fruitConfirmationPopup').style.display = 'none';
+        }
+
+        function toggleAI() {
+            var toggleSwitch = document.getElementById('toggleSwitch');
+            var message = document.getElementById('message');
+            if (toggleSwitch.checked) {
+                message.textContent = 'AI System activated';
+            } else {
+                message.textContent = 'AI System deactivated';
+            }
+            message.style.display = 'block';
+            setTimeout(function () {
+                message.style.display = 'none';
+            }, 2000);
+        }
+
+        function showAimAssistConfirmation() {
+            var aimValue = document.getElementById('aimSlider').value;
+            document.getElementById('aimValue').textContent = aimValue;
+            document.getElementById('aimAssistConfirmationPopup').style.display = 'block';
+        }
+
+        function confirmAimAssist() {
+            var aimValue = document.getElementById('aimSlider').value;
+            var message = document.getElementById('message');
+            message.textContent = 'Aim Assist set to ' + aimValue;
+            message.style.display = 'block';
+            setTimeout(function () {
+                message.style.display = 'none';
+            }, 2000);
+            document.getElementById('aimAssistConfirmationPopup').style.display = 'none';
+        }
+
+        function cancelAimAssist() {
+            document.getElementById('aimAssistConfirmationPopup').style.display = 'none';
+        }
+    </script>
+</body>
+</html>

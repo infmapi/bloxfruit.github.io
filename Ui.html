@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Roblox Connection</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: black; /* Solid black background */
+            color: white; /* Text color */
+            font-family: Arial, sans-serif;
+        }
+
+        .top-bar {
+            background-color: #333; /* Dark gray background */
+            color: white; /* Text color */
+            padding: 10px 20px; /* Padding for content inside the bar */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5); /* Shadow for the bar */
+            z-index: 1000; /* Ensure the bar stays on top */
+        }
+
+        .content {
+            padding-top: 50px; /* Space for the top bar */
+            /* Add more styles for your content here */
+        }
+
+        .connected {
+            color: #00ff00; /* Green color for connected status */
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <span id="connection-status">Not Connected</span>
+    </div>
+    <div class="content">
+        <!-- Your content goes here -->
+    </div>
+
+    <script>
+        function checkRoblox() {
+            // Check if Roblox app is open
+            // You need to implement this part based on your system setup
+            var isRobloxOpen = true; // For demo purposes, assuming it's always open
+
+            // Get the status element
+            var statusElement = document.getElementById('connection-status');
+
+            // Change status based on Roblox app
+            if (isRobloxOpen) {
+                statusElement.textContent = 'Connected';
+                statusElement.classList.add('connected');
+            } else {
+                statusElement.textContent = 'Not Connected';
+                statusElement.classList.remove('connected');
+            }
+        }
+
+        // Check Roblox status initially and every 5 seconds
+        checkRoblox();
+        setInterval(checkRoblox, 5000);
+    </script>
+</body>
+</html>
