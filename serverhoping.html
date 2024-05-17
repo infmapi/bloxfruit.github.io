@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Control UI</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .glass-bar {
+            background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+            border-radius: 20px; /* Rounded corners */
+            padding: 20px;
+            backdrop-filter: blur(10px); /* Glass morph effect */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow */
+            margin-top: 5vh; /* Adjust to position vertically */
+            width: 60%; /* Take up 60% of the screen width */
+            color: #fff; /* Text color */
+        }
+
+        .glass-circle {
+            width: 45px; /* Adjust the width of the circle */
+            height: 45px; /* Adjust the height of the circle */
+            background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+            border-radius: 50%; /* Circle shape */
+            backdrop-filter: blur(10px); /* Glass morph effect */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow */
+            margin-top: 5vh; /* Adjust to position vertically */
+            cursor: pointer; /* Change cursor to pointer on hover */
+            transition: background-color 1s ease; /* Smooth transition for background color */
+        }
+
+        .glass-circle img {
+            max-width: 100%;
+            max-height: 100%;
+            border-radius: 50%; /* Make the image circular */
+        }
+
+        .message {
+            background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Shadow */
+            font-weight: bold;
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+            transition: opacity 0.5s ease; /* Smooth transition for opacity */
+        }
+
+        .big-box {
+            background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+            border-radius: 20px; /* Rounded corners */
+            margin-top: 5vh; /* Adjust to position vertically */
+            width: 80%; /* Take up 80% of the screen width */
+            height: 80vh; /* Take up 80% of the screen height */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Shadow */
+            padding: 20px; /* Add padding */
+            display: flex; /* Flex container */
+            flex-direction: column; /* Stack children vertically */
+            align-items: center; /* Center children horizontally */
+        }
+
+        .server-hop-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 10px;
+        }
+
+        .server-hop-icon {
+            width: 40px; /* Adjust the width of the icon */
+            height: auto; /* Maintain aspect ratio */
+            cursor: pointer; /* Change cursor to pointer on hover */
+        }
+
+        .tooltip {
+            visibility: hidden;
+            background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+            color: #fff;
+            text-align: center;
+            padding: 5px 10px;
+            border-radius: 10px;
+            position: absolute;
+            z-index: 1;
+            bottom: 100%; /* Position above the icon */
+            left: 50%; /* Center horizontally */
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s ease; /* Smooth transition for opacity */
+        }
+
+        .server-hop-container:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .dropdown-container {
+            margin-bottom: 20px;
+        }
+
+        .dropdown-container select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: none;
+            outline: none;
+            color: #f2f0f0;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .tag-box {
+            width: 100%;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.3);
+            color: #fff;
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .tag {
+            padding: 5px 10px;
+            background-color: #000000;
+            color: #fff;
+            border-radius: 5px;
+            margin-right: 10px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+
+        .tag:hover {
+            background-color: #45a049;
+        }
+
+        .start-button {
+            background-color: transparent;
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .start-button:hover {
+            background-color: #fff;
+            color: #000;
+        }
+
+        .start-message {
+            background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3); /* Shadow */
+            font-weight: bold;
+            margin-top: 20px;
+            display: none; /* Initially hidden */
+            transition: opacity 0.5s ease; /* Smooth transition for opacity */
+        }
+    </style>
+</head>
+<body>
+    <div class="glass-bar">
+        <a href="index.html" class="server-hop-container">
+            <img src="logo.png" alt="Server Hop" class="server-hop-icon">
+            <span class="tooltip">Main</span>
+        </a>
+    </div>
+
+    <div class="glass-circle" onclick="toggleActivation()" id="glassCircle">
+        <img src="server hop.png" alt="Logo">
+    </div>
+    <div class="message" id="message">Activated</div>
+
+    <div class="big-box">
+        <p style="color: #fff; font-weight: bold; margin-bottom: 20px;">Server Hop Options</p>
+        <div class="dropdown-container">
+            <select class="glass-dropdown" id="serverHopDropdown">
+                <option value="">Select an option</option>
+                <option value="Sea Kings">Sea Kings</option>
+                <option value="Haki Abilities">Haki Abilities</option>
+                <option value="Sky Island Exploration">Sky Island Exploration</option>
+                <option value="Ancient Weapons">Ancient Weapons</option>
+                <option value="Legendary Swords">Legendary Swords</option>
+                <option value="Pirate Crews">Pirate Crews</option>
+                <option value="Fruit Awakening">Fruit Awakening</option>
+                <option value="Marineford War">Marineford War</option>
+                <option value="Legendary Boss Drops">Legendary Boss Drops</option>
+                <option value="Exploring Raids and Dungeons">Exploring Raids and Dungeons</option>
+            </select>
+        </div>
+
+        <div class="tag-box" id="tagBox"></div>
+
+        <button class="start-button" onclick="startServerHop()">Start Server Hop</button>
+        <div class="start-message" id="startMessage">Starting Server Hop...</div>
+        <div class="start-message" id="searchingMessage">Searching Servers...</div>
+        <div class="start-message" id="startedMessage" style="display: none;">Server Hopping Started!</div>
+
+    </div>
+
+    <script>
+        function toggleActivation() {
+            var circle = document.getElementById('glassCircle');
+            var message = document.getElementById('message');
+            if (circle.classList.contains('activated')) {
+                circle.classList.remove('activated');
+                message.textContent = 'Deactivated';
+            } else {
+                circle.classList.add('activated');
+                message.textContent = 'Activated';
+            }
+            message.style.display = 'block';
+            setTimeout(function () {
+                message.style.display = 'none';
+            }, 2000);
+        }
+
+        function startServerHop() {
+        var startButton = document.querySelector('.start-button');
+        var startMessage = document.getElementById('startMessage');
+        var searchingMessage = document.getElementById('searchingMessage');
+        var startedMessage = document.getElementById('startedMessage'); // New line
+
+        startButton.style.display = 'none';
+        startMessage.style.display = 'block';
+
+        // Simulate server hopping process
+        setTimeout(function () {
+            startMessage.style.display = 'none';
+            searchingMessage.style.display = 'block';
+        }, 2000);
+
+        // Simulate searching servers
+        setTimeout(function () {
+            searchingMessage.style.display = 'none';
+            startedMessage.style.display = 'block'; // New line
+        }, 4000);
+    }
+
+        var tagBox = document.getElementById('tagBox');
+        var dropdown = document.getElementById('serverHopDropdown');
+
+        dropdown.addEventListener('change', function () {
+            var selectedOption = dropdown.options[dropdown.selectedIndex].value;
+            if (selectedOption !== "") {
+                var tag = document.createElement('div');
+                tag.className = 'tag';
+                tag.textContent = selectedOption;
+                tagBox.appendChild(tag);
+            }
+        });
+    </script>
+</body>
+</html>
