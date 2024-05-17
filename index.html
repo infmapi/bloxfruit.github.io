@@ -201,11 +201,54 @@
             background: #4CAF50;
             cursor: pointer;
         }
+        .server-hop-container {
+    position: relative;
+    display: inline-block;
+}
+
+.server-hop-container {
+    position: relative;
+    display: inline-block;
+}
+
+.server-hop-icon {
+    width: 40px; /* Adjust the width of the icon */
+    height: auto; /* Maintain aspect ratio */
+    cursor: pointer; /* Change cursor to pointer on hover */
+}
+
+.tooltip {
+    visibility: hidden;
+    background-color: rgba(0, 0, 0, 0.7); /* Black tint */
+    color: #fff;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 100%; /* Position above the icon */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%);
+    opacity: 0;
+    transition: opacity 0.3s ease; /* Smooth transition for opacity */
+}
+
+.server-hop-container:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
     </style>
 </head>
 <body>
     <div class="glass-bar">
+        <a href="serverhoping.html" class="server-hop-container">
+            <img src="server hop.png" alt="Server Hop" class="server-hop-icon">
+            <span class="tooltip">Server Hopping</span>
+        </a>
         <!-- Content of the glass bar -->
+    </div>
+        
+        
     </div>
     <div class="glass-circle" onclick="toggleActivation()" id="glassCircle">
         <img src="logo.png" alt="Logo">
